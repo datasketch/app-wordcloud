@@ -1,0 +1,203 @@
+font_family:
+  show: true
+  input_info:
+    input_type: selectizeInput
+    input_params:
+      label: Font family
+      choices:
+        - Segoe UI
+        - Sawasdee
+        - Liberation Sans Narrow
+      selected: LM Mono 10
+  update_param: selected
+font_weight:
+  show: true
+  input_info:
+    input_type: radioButtons
+    input_params:
+      label: Font weight
+      choices:
+        Normal:
+        - normal
+        Bold:
+        - bold
+      inline: true
+  update_param: select
+color:
+  show: true
+  input_info:
+    input_type: colorPalette
+    input_params:
+      colors:
+        - green 
+        - red 
+        - blue 
+  update_param: selected
+theme:
+  show: true
+  input_info:
+    input_type: selectizeInput
+    input_params:
+      label: Theme
+      choices:
+        Random light:
+        - random-light 
+        Random dark:
+        - random-dark 
+      selected: random-light
+  update_param: selected
+background_color:
+  show: true
+  input_info:
+    input_type: selectizeInput
+    input_params:
+      label: Background color
+      choices:
+        White:
+        - white 
+        Red:
+        - red 
+        Blue:
+        - blue
+        Gray:
+        - Gray 
+      selected: white
+  update_param: selected
+size:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Font size
+      min: 0
+      max: 6
+      value: 0.6 
+      step: 0.1
+  update_param: value
+min_size:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Minimum font size
+      min: 0
+      max: 30
+      value: 0 
+      step: 1
+  update_param: value
+grid_size:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Container'size
+      min: 1
+      max: 200
+      value: 0
+      step: 1
+  update_param: value
+rotation:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Minimum, maximum rotation
+      min: 0
+      max: 2
+      value: 
+       - 0.25
+       - 0.50
+      step: 0.1
+      post: "pi"
+  update_param: value
+min_rotation:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Minimum rotation
+      min: 0
+      max: 2
+      value: 0.25
+      step: 0.1
+      post: "pi"
+  update_param: value
+max_rotation:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Maximum rotation
+      min: 0
+      max: 2
+      value: 0.25
+      step: 0.1
+      post: "pi"
+  update_param: value
+rotation_ratio:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Probability for rotation
+      min: 0
+      max: 1
+      value: 0.4
+      step: 0.1
+  update_param: value
+shape:
+  show: true
+  input_info:
+    input_type: selectizeInput
+    input_params:
+      label: Shape
+      choices:
+        Circle:
+        - circle
+        Cardioid:
+        - cardioid
+        Diamond:
+        - diamond
+        Triangle forward:
+        - triangle-forward
+        Triangle:
+        - triangle
+        Pentagon:
+        - pentagon
+        Star:
+        - star
+      selected: LM Mono 10
+  update_param: selected
+ellipticity:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Ellipticity
+      min: 0
+      max: 1
+      value: 0.65
+      step: 0.1
+  update_param: value
+width:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Width
+      min: 0
+      max: 600
+      value: 300
+      step: 1
+  update_param: value
+height:
+  show: true
+  input_info:
+    input_type: sliderInput
+    input_params:
+      label: Height
+      min: 1
+      max: 600
+      value: 300
+      step: 1
+  update_param: value

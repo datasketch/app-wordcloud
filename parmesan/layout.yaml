@@ -1,0 +1,18 @@
+Styles:
+- font_family
+- font_weight
+#- color
+- theme
+- background_color
+Display:
+- grid_size
+- shape
+- ellipticity
+- size
+#- min_size
+- rotation_ratio
+- rotation
+#- min_rotation
+#- max_rotation
+#- width
+#- height

@@ -1,0 +1,12 @@
+name: app_wordcloud
+title: app_wordcloud
+username:
+account: randommonkey
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2167988
+bundleId: 3052334
+url: https://randommonkey.shinyapps.io/app_wordcloud/
+when: 1587597874.867
+asMultiple: FALSE
+asStatic: FALSE
