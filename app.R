@@ -6,7 +6,7 @@ library(tidyverse)
 library(wordcloud2)
 library(htmlwidgets)
 
-
+# falta el download selfcontained
 
 textDocumentInputUI <- function (id, choices = c("pasted", "fileUpload", "sampleData", 
                                                  "googleSheet", "url", "dsLibrary"), selected = "pasted") {
