@@ -140,8 +140,8 @@ width:
   input_params:
     label: Width
     min: 0
-    max: 600
-    value: 500
+    max: 700
+    value: 600
     step: 1
 height:
   show: true
@@ -149,6 +149,6 @@ height:
   input_params:
     label: Height
     min: 1
-    max: 600
-    value: 400
+    max: 800
+    value: 500
     step: 1
