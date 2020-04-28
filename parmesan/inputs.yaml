@@ -1,203 +1,154 @@
 font_family:
   show: true
-  input_info:
-    input_type: selectizeInput
-    input_params:
-      label: Font family
-      choices:
-        - Segoe UI
-        - Sawasdee
-        - Liberation Sans Narrow
-      selected: LM Mono 10
-  update_param: selected
+  input_type: selectizeInput
+  input_params:
+    label: Font family
+    choices:
+      - Segoe UI
+      - Sawasdee
+      - Liberation Sans Narrow
+    selected: LM Mono 10
 font_weight:
   show: true
-  input_info:
-    input_type: radioButtons
-    input_params:
-      label: Font weight
-      choices:
-        Normal:
-        - normal
-        Bold:
-        - bold
-      inline: true
-  update_param: select
+  input_type: radioButtons
+  input_params:
+    label: Font weight
+    choices:
+      Normal:
+      - normal
+      Bold:
+      - bold
+    inline: true
 color:
   show: true
-  input_info:
-    input_type: colorPalette
-    input_params:
-      colors:
-        - green 
-        - red 
-        - blue 
-  update_param: selected
+  input_type: colorPalette
+  input_params:
+    colors:
+      - green 
+      - red 
+      - blue 
 theme:
   show: true
-  input_info:
-    input_type: selectizeInput
-    input_params:
-      label: Theme
-      choices:
-        Random light:
-        - random-light 
-        Random dark:
-        - random-dark 
-      selected: random-light
-  update_param: selected
+  input_type: selectizeInput
+  input_params:
+    label: Theme
+    choices:
+      Random light:
+      - random-light 
+      Random dark:
+      - random-dark 
+    selected: random-light
 background_color:
   show: true
-  input_info:
-    input_type: selectizeInput
-    input_params:
-      label: Background color
-      choices:
-        White:
-        - white 
-        Red:
-        - red 
-        Blue:
-        - blue
-        Gray:
-        - Gray 
-      selected: white
-  update_param: selected
+  input_type: selectizeInput
+  input_params:
+    label: Background color
+    choices:
+      White:
+      - white 
+      Red:
+      - red 
+      Blue:
+      - blue
+      Gray:
+      - Gray 
+    selected: white
 size:
   show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Font size
-      min: 0
-      max: 6
-      value: 0.6 
-      step: 0.1
-  update_param: value
+  input_type: sliderInput
+  input_params:
+    label: Font size
+    min: 0
+    max: 6
+    value: 0.6 
+    step: 0.1
 min_size:
   show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Minimum font size
-      min: 0
-      max: 30
-      value: 0 
-      step: 1
-  update_param: value
+  input_type: sliderInput
+  input_params:
+    label: Minimum font size
+    min: 0
+    max: 30
+    value: 0 
+    step: 1
 grid_size:
   show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Container'size
-      min: 1
-      max: 200
-      value: 0
-      step: 1
-  update_param: value
+  input_type: sliderInput
+  input_params:
+    label: Space between words
+    min: 1
+    max: 200
+    value: 0
+    step: 1
 rotation:
   show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Minimum, maximum rotation
-      min: 0
-      max: 2
-      value: 
-       - 0.25
-       - 0.50
-      step: 0.1
-      post: "pi"
-  update_param: value
-min_rotation:
-  show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Minimum rotation
-      min: 0
-      max: 2
-      value: 0.25
-      step: 0.1
-      post: "pi"
-  update_param: value
-max_rotation:
-  show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Maximum rotation
-      min: 0
-      max: 2
-      value: 0.25
-      step: 0.1
-      post: "pi"
-  update_param: value
+  show_if:
+    rotation_ratio:
+      equals: 1
+  input_type: sliderInput
+  input_params:
+    label: Minimum, maximum rotation
+    min: 0
+    max: 2
+    value: 
+     - 0.25
+     - 0.75
+    step: 0.1
+    post: "pi"
 rotation_ratio:
   show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Probability for rotation
-      min: 0
-      max: 1
-      value: 0.4
-      step: 0.1
-  update_param: value
+  input_type: sliderInput
+  input_params:
+    label: Probability for rotation
+    min: 0
+    max: 1
+    value: 0.4
+    step: 0.1
 shape:
   show: true
-  input_info:
-    input_type: selectizeInput
-    input_params:
-      label: Shape
-      choices:
-        Circle:
-        - circle
-        Cardioid:
-        - cardioid
-        Diamond:
-        - diamond
-        Triangle forward:
-        - triangle-forward
-        Triangle:
-        - triangle
-        Pentagon:
-        - pentagon
-        Star:
-        - star
-      selected: LM Mono 10
-  update_param: selected
+  input_type: selectizeInput
+  input_params:
+    label: Shape
+    choices:
+      Circle:
+      - circle
+      Cardioid:
+      - cardioid
+      Diamond:
+      - diamond
+      Triangle forward:
+      - triangle-forward
+      Triangle:
+      - triangle
+      Pentagon:
+      - pentagon
+      Star:
+      - star
+    selected: Circle
 ellipticity:
   show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Ellipticity
-      min: 0
-      max: 1
-      value: 0.65
-      step: 0.1
-  update_param: value
+  input_type: sliderInput
+  input_params:
+    label: Ellipticity
+    min: 0
+    max: 1
+    value: 0.65
+    step: 0.1
 width:
   show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Width
-      min: 0
-      max: 600
-      value: 300
-      step: 1
-  update_param: value
+  input_type: sliderInput
+  input_params:
+    label: Width
+    min: 0
+    max: 600
+    value: 500
+    step: 1
 height:
   show: true
-  input_info:
-    input_type: sliderInput
-    input_params:
-      label: Height
-      min: 1
-      max: 600
-      value: 300
-      step: 1
-  update_param: value
+  input_type: sliderInput
+  input_params:
+    label: Height
+    min: 1
+    max: 600
+    value: 400
+    step: 1
