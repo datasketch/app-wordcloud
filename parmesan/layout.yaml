@@ -9,6 +9,9 @@ styles:
 display:
   label: Display
   inputs:
+#    - top_n
+    - width
+    - height
     - grid_size
     - shape
     - ellipticity
@@ -16,5 +19,3 @@ display:
     - min_size
     - rotation_ratio
     - rotation
-    - width
-    - height
