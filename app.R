@@ -1,10 +1,12 @@
 library(shinypanels)
 library(parmesan)
 library(shinyinvoer)
+library(shi18ny)
 library(dsmodules)
 library(tidyverse)
 library(wordcloud2)
 library(htmlwidgets)
+library(tm)
 library(readtext)
 
 # Internacionalización
@@ -12,176 +14,117 @@ library(readtext)
 # Falta el download selfcontained
 
 
-ui <- panelsPage(panel(title = "Upload Data", 
+ui <- panelsPage(useShi18ny(),
+                 panel(title = ui_("upload_data"),
                        width = 200,
-                       body = textDocumentInputUI("initial_data",
-                                                  choices = list("Muestra" = "sampleData",
-                                                                 "Copiar & pegar" = "pasted",
-                                                                 "URL (scraping de párrafos)" = "url",
-                                                                 "Cargar" = "fileUpload"
-                                                                 #"GoogleSheet" = "googleSheet",
-                                                                 #"Mi librería" = "dsLibrary"
-                                                  ),
-                                                  selected = "sampleData")),
-                 panel(title = "Dataset",
+                       body = uiOutput("text_input")),
+                 panel(title = ui_("dataset"), 
                        width = 300,
+                       # body = uiOutput("data_preview", style = "box-shadow: -3px 3px 5px 2px rgba(0, 0, 0, 0.06); padding: 12px 10px;")),
                        body = uiOutput("data_preview")),
                  panel(title = "Options",
+                       color = "chardonnay",
                        width = 250,
                        body = uiOutput("controls")),
-                 panel(title = "Viz",
+                 panel(title = ui_("viz"),
+                       color = "chardonnay",
                        can_collapse = FALSE,
-                       body = div(#wordcloud2Output("result"),
+                       body = div(langSelectorInput("lang", position = "fixed"),
+                                  #wordcloud2Output("result"),
                                   uiOutput("result"),
                                   shinypanels::modal(id = "test",
-                                                     title = "Download plot",
+                                                     title = ui_("download_plot"),
                                                      # dsmodules::downloadImageUI("download_data_button", "Download HTML")),
-                                                     dsmodules::downloadHtmlwidgetUI("download_data_button", "Download HTML"))),
+                                                     # dsmodules::downloadHtmlwidgetUI("download_data_button", "Download HTML"))),
+                                                     uiOutput("modal"))),
                        footer = shinypanels::modalButton(label = "Download plot", modal_id = "test")))
 
-f0 <- function(input, output, session, sampleFiles = NULL, infoList = NULL) {
-  
-  output$textDocumentInputControls <- shiny::renderUI({
-    ns <- session$ns
-    
-    if (shiny::is.reactive(sampleFiles))
-      sampleFiles <- sampleFiles()
-    
-    if (!is.null(input$textDocumentInput) && input$textDocumentInput == "sampleData") {
-      if (!all(map_lgl(sampleFiles, file.exists)))
-        stop("All sample files must exist")
-    }
-    
-    textDocumentInputControls <- list(pasted = shiny::textAreaInput(ns("inputDataPasted"), label = "Paste", placeholder = "placeholder", rows = 5),
-                                      fileUpload = shiny::fileInput(ns("inputDataUpload"), "Choose text, pdf file", accept = c("text/plain", ".txt", ".docx", ".pdf")),
-                                      sampleData = shiny::selectInput(ns("inputDataSample"), "Select sample data", choices = sampleFiles),
-                                      url = shiny::textInput(ns("inputURL"), "Page URL"),
-                                      googleSheet = list(shiny::textInput(ns("inputDataGoogleSheet"), "GoogleSheet URL"), shiny::numericInput(ns("inputDataGoogleSheetSheet"), "Sheet", 1))#,
-                                      # dsLibrary = dsDataInputUI(ns("dsFileInput"))
-    )
-    
-    if (is.null(input$textDocumentInput)) {
-      return()
-    } else {
-      textDocumentInputControls[[input$textDocumentInput]]
-    }
-  })
-  
-  queryData <- reactive({
-    query <- parseQueryString(session$clientData$url_search)
-    json_str <- query[["json_data"]]
-    data <- NULL
-    if (!is.null(json_str)) {
-      data <- jsonlite::fromJSON(URLdecode(json_str))
-    }
-    data
-  })
-  
-  output$textDocumentInputInfo <- renderUI({
-    ns <- session$ns
-    textDocumentInputInfo <- infoList[[input$textDocumentInput]]
-    if (is.null(textDocumentInputInfo)) return()
-    textDocumentInputInfo
-  })
-  
-  inputData <- shiny::reactive({
-    if (is.null(input$textDocumentInput)) {
-      warning("inputType must be one of pasted, fileUpload, sampleData, url, googlesheet, dsLibrary")
-      return()
-    }
-    
-    inputType <- input$textDocumentInput
-    queryData <- queryData()
-    if (!is.null(queryData)) {
-      return(queryData)
-    }
-    
-    if (inputType == "pasted") {
-      if (is.null(input$inputDataPasted))
-        return()
-      if (input$inputDataPasted == "")
-        return()
-      tx <- input$inputDataPasted
-    } else if (inputType == "fileUpload") {
-      if (is.null(input$inputDataUpload))
-        return()
-      old_path <- input$inputDataUpload$datapath
-      path <- file.path(tempdir(), input$inputDataUpload$name)
-      file.copy(old_path, path)
-      print(path)
-      tx <- readtext::readtext(path)$text
-    } else if (inputType == "sampleData") {
-      file <- input$inputDataSample
-      print("asdf")
-      print(file)
-      tx <- readLines(file) %>%
-        paste(collapse = "<br/>")
-    } else if (inputType == "url") {
-      url <- input$inputURL
-      tx <- xml2::read_html(url) %>%
-        xml2::xml_find_all("//p") %>%
-        xml2::xml_text() %>%
-        paste(collapse = "<br/>")
-    } else if (inputType == "googleSheet") {
-      if (is.null(input$inputDataGoogleSheet))
-        return()
-      if (input$inputDataGoogleSheet == "")
-        return()
-      # url <- input$inputDataGoogleSheet
-      # ws <- input$inputDataGoogleSheetSheet
-      # s <- gs_url(url)
-      # tabs <- gs_ws_ls(s)
-      # df <- gs_read_csv(s, ws = ws)
-    } else if (inputType == "dsLibrary") { # ADAPTAR PARA IMÁGENES
-      # tx <- callModule(dsDataInput, "dsFileInput")
-      # tx <- df()
-    }
-    return(tx)
-  })
-  inputData
-}
 
 server <- function(input, output, session) {
+  
+  i18n <- list(defaultLang = "en", availableLangs = c("es", "en", "pt"))
+  lang <- callModule(langSelector, "lang", i18n = i18n, showSelector = TRUE)
+  observeEvent(lang(), {
+    uiLangUpdate(input$shi18ny_ui_classes, lang())
+  })  
+  
+  
+  output$text_input <- renderUI({
+    choices <- c("sampleData", "pasted", "fileUpload", "url")
+    names(choices) <- i_(c("sample", "paste", "upload", "url"), lang = lang())
+    textDocumentInputUI("initial_data",
+                        choices = choices,
+                        selected = ifelse(is.null(input$`initial_data-textDocumentInput`), "sampleData", input$`initial_data-textDocumentInput`))
+  })
   
   path <- "parmesan"
   parmesan <- parmesan_load(path)
   parmesan_input <- parmesan_watch(input, parmesan)
   parmesan_alert(parmesan, env = environment())
+  parmesan_lang <- reactive({i_(parmesan, lang(), keys = c("label", "choices"))})
   output_parmesan("controls", 
-                  parmesan = parmesan,
+                  parmesan = parmesan_lang,
                   input = input, 
-                  output = output)
+                  output = output,
+                  env = environment())
   
-  datasetInput <- callModule(f0,
-                             "initial_data",
-                             sampleFile = list("Montés" = "data/sampleData/nvtm"),
-                             infoList = list("pasted" = "",
-                                             "fileUpload" = "Importar archivos de texto (.doc, .txt, .pdf)",
-                                             "sampleData" = "",
-                                             "url" = "Se extraen los párrafos (el contenido de los HTML tags p) de la página web"))
+  output$modal <- renderUI({
+    dw <- i_("download", lang())
+    downloadHtmlwidgetUI("download_data_button", paste(dw, "HTML"))
+  })
+  
+  labels <- reactive({
+    list(sampleLabel = i_("sample_lb", lang()), 
+         sampleFiles = list("Montés" = "data/sampleData/nvtm"),
+         pasteLabel = i_("paste", lang()), pasteValue = "", pastePlaceholder = i_("paste_pl", lang()), pasteRows = 5, 
+         uploadLabel = i_("upload_lb", lang()), uploadButtonLabel = i_("upload_bt_lb", lang()), uploadPlaceholder = i_("upload_pl", lang()),
+         urlLabel = i_("url_lb", lang()),
+         infoList = list("pasted" = "",
+                         "fileUpload" = "Importar archivos de texto (.doc, .txt, .pdf)",
+                         "sampleData" = "",
+                         "url" = "Se extraen los párrafos (el contenido de los HTML tags p) de la página web"))
+  })
+  
+  observeEvent(labels(),{
+  # observe({
+  # datasetInput <- eventReactive(labels(), {
+  datasetInput <<- do.call(callModule, c(textDocumentInput,
+                          # do.call(callModule, c(t0,
+                          "initial_data",
+                          labels()))
+  })
   
   output$data_preview <- renderUI({
     req(datasetInput())
-    HTML(datasetInput())
+    HTML(paste0("<div style = 'box-shadow: -3px 3px 5px 2px rgba(0, 0, 0, 0.06); padding: 12px 10px;'>", datasetInput(), "</div>"))
   })
   
-  # n_palabras <- reactive({
-  #   req(datasetInput())
-  #   nrow(datasetInput())
-  # })
-  observe({
-    assign("dt", datasetInput(), envir = globalenv())
-  })
-  
-  wd <- reactive({
+  tb <- reactive({
     dt0 <- datasetInput()
     if (!is.data.frame(dt0)) {
       dt0 <- gsub("\\.|,|;|¡|!|\\?|¿|-|:", "", dt0)
       dt0 <- strsplit(dt0, " ")[[1]]
       dt0 <- table(dt0)
+      dt0 <- as.data.frame(dt0)
     }
+    if (input$stop_words) {
+      dt1 <- setdiff(dt0$dt0, tm::stopwords(input$words_language))
+      dt2 <- data.frame(pl = dt1) %>%
+        left_join(dt0, by = c("pl" = "dt0")) 
+      dt0 <- dt2
+    }
+    dt0 %>%
+      arrange(desc(Freq))
+  })
+  
+  n_palabras <- reactive({
+    nrow(tb())
+  })
+  
+  wd <- reactive({
+    req(tb(), input$top_n)
     
-    wordcloud2(data = dt0,
+    wordcloud2(data = tb()[1:input$top_n, ], 
                size = input$size,
                minSize = input$min_size,
                gridSize = input$grid_size,

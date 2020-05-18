@@ -1,15 +1,20 @@
 styles:
-  label: Styles
+  label: styles
   inputs:
     - font_family
     - font_weight
 #    - color
     - theme
     - background_color
-display:
-  label: Display
+words:
+  label: words
   inputs:
-#    - top_n
+    - top_n
+    - stop_words
+    - words_language
+Sizes:
+  label: sizes
+  inputs:
     - width
     - height
     - grid_size

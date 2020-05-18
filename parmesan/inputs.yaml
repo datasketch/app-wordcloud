@@ -2,7 +2,7 @@ font_family:
   show: true
   input_type: selectizeInput
   input_params:
-    label: Font family
+    label: font_family
     choices:
       - Liberation Sans Narrow
       - Sawasdee
@@ -12,7 +12,7 @@ font_weight:
   show: true
   input_type: radioButtons
   input_params:
-    label: Font weight
+    label: font_weight
     choices:
       Normal:
       - normal
@@ -23,6 +23,7 @@ color:
   show: true
   input_type: colorPalette
   input_params:
+    label: color
     colors:
       - green 
       - red 
@@ -31,7 +32,7 @@ theme:
   show: true
   input_type: selectizeInput
   input_params:
-    label: Theme
+    label: theme
     choices:
       Random light:
       - random-light 
@@ -42,7 +43,7 @@ background_color:
   show: true
   input_type: selectizeInput
   input_params:
-    label: Background color
+    label: background_color
     choices:
       White:
       - white 
@@ -57,25 +58,25 @@ size:
   show: true
   input_type: sliderInput
   input_params:
-    label: Font size
+    label: font_size
     min: 0
     max: 6
-    value: 0.6 
+    value: 1
     step: 0.1
 min_size:
   show: true
   input_type: sliderInput
   input_params:
-    label: Minimum font size
+    label: min_size
     min: 0
-    max: 30
-    value: 0 
+    max: 6
+    value: 2
     step: 1
 grid_size:
   show: true
   input_type: sliderInput
   input_params:
-    label: Space between words
+    label: grid_size
     min: 1
     max: 200
     value: 0
@@ -87,7 +88,7 @@ rotation:
       not_equals: 0
   input_type: sliderInput
   input_params:
-    label: Minimum, maximum rotation
+    label: rotation
     min: 0
     max: 2
     value: 
@@ -99,7 +100,7 @@ rotation_ratio:
   show: true
   input_type: sliderInput
   input_params:
-    label: Probability for rotation
+    label: rotation_ratio
     min: 0
     max: 1
     value: 0.4
@@ -108,7 +109,7 @@ shape:
   show: true
   input_type: selectizeInput
   input_params:
-    label: Shape
+    label: shape
     choices:
       Circle:
       - circle
@@ -138,17 +139,69 @@ width:
   show: true
   input_type: numericInput
   input_params:
-    label: Width
+    label: width
     min: 0
-    max: 700
-    value: 600
+    max: 1000
+    value: 900
     step: 1
 height:
   show: true
   input_type: numericInput
   input_params:
-    label: Height
+    label: height
     min: 1
     max: 800
-    value: 500
+    value: 700
     step: 1
+top_n:
+  show: true
+  input_type: numericInput
+  input_params:
+    label: top_n
+    min: 1
+    max: n_palabras()
+    value: n_palabras()
+    step: 1
+  update_param: value
+stop_words:
+  show: true
+  input_type: checkboxInput
+  input_params:
+    label: stop_words
+    value: true
+words_language:
+  show: true
+  show_if:
+    stop_words:
+      equals: true
+  input_type: selectizeInput
+  input_params:
+    label: words_language
+    choices:
+      Danish:
+      - danish
+      Dutch:
+      - dutch
+      English:
+      - english
+      Finnish:
+      - finish
+      French:
+      - french
+      German:
+      - german
+      Hungarian:
+      - hungarian
+      Italian:
+      - italian
+      Norway:
+      - norway
+      Portuguese:
+      - portuguese
+      Russian:
+      - russian
+      Spanish:
+      - spanish
+      Swedish:
+      - swedish
+    selected: spanish  

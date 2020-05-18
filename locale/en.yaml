@@ -1,0 +1,34 @@
+upload_data: Upload text
+dataset: Text
+options: Options
+viz: Viz
+sample: Sample texts
+sample_lb: Select a sample text
+paste: Copy & paste
+paste_pl: Copy and paste it here
+upload: DOC/TXT/PDF upload
+upload_lb: Choose DOC/TXT/PDF file
+upload_bt_lb: Browse...
+upload_pl: No file selected
+url: URL
+url_lb: Scrape webpage
+styles: Styles
+words: Words
+sizes: Sizes
+font_family: Font family
+font_weight: Font weight
+theme: Theme
+background_color: Background color
+top_n: Top n words
+stop_words: Remove stop words
+words_language: Text language
+width: Width
+height: Height
+grid_size: Space between words
+shape: Shape
+ellipticity: Ellipticity
+size: Font size
+min_size: Minimum font size
+rotation_ratio: Probability for rotation
+rotation: Minimum, maximum rotation
+download_plot: Download plot

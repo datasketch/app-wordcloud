@@ -1,0 +1,34 @@
+upload_data: Subir texto
+dataset: Texto
+options: Opciones
+viz: Vizualización
+sample: Textos de amostra
+sample_lb: Seleccionar texto de amostra
+paste: Copiar e colar
+paste_pl: Copie e cole aqui
+upload: Subir DOC/TXT/PDF
+upload_lb: Escolher arquivo DOC/TXT/PDF
+upload_bt_lb: Examinar...
+upload_pl: Nenhum aquivo seleccionado
+url: URL
+url_lb: Scrapear página da web
+styles: Estilos
+words: Palavras
+sizes: Tamanhos
+font_family: Fonte do texto
+font_weight: Tamanho do texto
+theme: Tópico
+background_color: Cor de fundo
+top_n: Palavras mais frequentes
+stop_words: Remova palavras comuns
+words_language: Idioma do texto
+width: Largura
+height: Alta
+grid_size: Espaçamento
+shape: Forma
+ellipticity: Elipse
+size: Tamanho do texto
+min_size: Tamanho mínimo do texto
+rotation_ratio: Rotação
+rotation: Rotação mínima
+download_plot: Baixar gráfico
