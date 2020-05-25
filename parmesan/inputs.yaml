@@ -34,11 +34,13 @@ theme:
   input_params:
     label: theme
     choices:
+      Datasketch:
+      - datasketch
       Random light:
       - random-light 
       Random dark:
       - random-dark 
-    selected: random-light
+    selected: datasketch
 background_color:
   show: true
   input_type: selectizeInput
@@ -52,15 +54,15 @@ background_color:
       Blue:
       - blue
       Gray:
-      - Gray 
+      - gray 
     selected: white
 size:
   show: true
   input_type: sliderInput
   input_params:
-    label: font_size
+    label: size
     min: 0
-    max: 6
+    max: 3
     value: 1
     step: 0.1
 min_size:
@@ -125,7 +127,7 @@ shape:
       - pentagon
       Star:
       - star
-    selected: Circle
+    selected: circle
 ellipticity:
   show: true
   input_type: sliderInput
@@ -135,6 +137,9 @@ ellipticity:
     max: 1
     value: 0.65
     step: 0.1
+  input_info:
+    icon: info-circle
+    text: info_el
 width:
   show: true
   input_type: numericInput
@@ -163,12 +168,18 @@ top_n:
     value: n_palabras()
     step: 1
   update_param: value
+  input_info:
+    icon: info-circle
+    text: info_tn
 stop_words:
   show: true
   input_type: checkboxInput
   input_params:
     label: stop_words
     value: true
+  input_info:
+    icon: info-circle
+    text: info_sw  
 words_language:
   show: true
   show_if:
@@ -178,30 +189,30 @@ words_language:
   input_params:
     label: words_language
     choices:
-      Danish:
-      - danish
-      Dutch:
-      - dutch
+#      Danish:
+#      - danish
+#      Dutch:
+#      - dutch
       English:
       - english
-      Finnish:
-      - finish
-      French:
-      - french
-      German:
-      - german
-      Hungarian:
-      - hungarian
-      Italian:
-      - italian
-      Norway:
-      - norway
+#      Finnish:
+#      - finish
+#      French:
+#      - french
+#      German:
+#      - german
+#      Hungarian:
+#      - hungarian
+#      Italian:
+#      - italian
+#      Norway:
+#      - norway
       Portuguese:
       - portuguese
-      Russian:
-      - russian
+#      Russian:
+#      - russian
       Spanish:
       - spanish
-      Swedish:
-      - swedish
-    selected: spanish  
+#      Swedish:
+#      - swedish
+    selected: english  

@@ -1,26 +1,26 @@
-styles:
-  label: styles
-  inputs:
-    - font_family
-    - font_weight
-#    - color
-    - theme
-    - background_color
 words:
   label: words
   inputs:
     - top_n
     - stop_words
     - words_language
-Sizes:
+styles:
+  label: styles
+  inputs:
+    - font_family
+    - font_weight
+    - size
+    #- min_size
+#    - color
+    - theme
+    - background_color
+sizes:
   label: sizes
   inputs:
-    - width
-    - height
-    - grid_size
     - shape
     - ellipticity
-    - size
-    - min_size
+    - grid_size
     - rotation_ratio
     - rotation
+    - width
+    - height

@@ -14,9 +14,9 @@ url: URL
 url_lb: Scrapear página da web
 styles: Estilos
 words: Palavras
-sizes: Tamanhos
+sizes: Imagem
 font_family: Fonte do texto
-font_weight: Tamanho do texto
+font_weight: Espessura do texto
 theme: Tópico
 background_color: Cor de fundo
 top_n: Palavras mais frequentes
@@ -32,3 +32,20 @@ min_size: Tamanho mínimo do texto
 rotation_ratio: Rotação
 rotation: Rotação mínima
 download_plot: Baixar gráfico
+info_sw: "Remova palavras (artigos e alguns verbos) que não são essenciais para entender o significado ou o contexto de uma frase"
+info_tn: "Escolhendo as n palavras mais frequentes no texto"
+info_el: 'Grau de "planicidade" da forma'
+spanish: Espanhol
+english: Inglês
+portuguese: Português
+white: Branco
+red: Vermelho
+blue: Azul
+gray: Cinzeto
+circle: Círculo
+cardioid: Cardióide
+diamond: Diamante
+triangle-forward: Triângulo adiante
+triangle: Triângulo
+pentagon: Pentágono
+star: Estrela

@@ -14,7 +14,7 @@ url: URL
 url_lb: Scrape webpage
 styles: Styles
 words: Words
-sizes: Sizes
+sizes: Image
 font_family: Font family
 font_weight: Font weight
 theme: Theme
@@ -32,3 +32,20 @@ min_size: Minimum font size
 rotation_ratio: Probability for rotation
 rotation: Minimum, maximum rotation
 download_plot: Download plot
+info_sw: "Remove words (such as articles and some verbs) that aren't essential for understanding the meaning or context of a sentence"
+info_tn: "Choosing the n more frequent words in the text"
+info_el: 'Degree of "flatness" of the shape'
+spanish: Espanish
+english: English
+portuguese: Portuguese
+white: White
+red: Red
+blue: Blue
+gray: Gray
+circle: Circle
+cardioid: Cardioid 
+diamond: Diamond
+triangle-forward: Triangle forward
+triangle: Triangle
+pentagon: Pentagon
+star: Star
