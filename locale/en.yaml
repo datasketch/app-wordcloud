@@ -35,6 +35,7 @@ download_plot: Download plot
 info_sw: "Remove words (such as articles and some verbs) that aren't essential for understanding the meaning or context of a sentence"
 info_tn: "Choosing the n more frequent words in the text"
 info_el: 'Degree of "flatness" of the shape'
+in_url: "Extracting the paragraphs (the HTML p tags content) of the webpage"
 spanish: Espanish
 english: English
 portuguese: Portuguese

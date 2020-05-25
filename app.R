@@ -77,9 +77,9 @@ server <- function(input, output, session) {
          uploadLabel = i_("upload_lb", lang()), uploadButtonLabel = i_("upload_bt_lb", lang()), uploadPlaceholder = i_("upload_pl", lang()),
          urlLabel = i_("url_lb", lang()),
          infoList = list("pasted" = "",
-                         "fileUpload" = "Importar archivos de texto (.doc, .txt, .pdf)",
+                         "fileUpload" = "",#"Importar archivos de texto (.doc, .txt, .pdf)",
                          "sampleData" = "",
-                         "url" = "Se extraen los párrafos (el contenido de los HTML tags p) de la página web"))
+                         "url" = i_("in_url", lang())))
   })
   
   observeEvent(lang(), {

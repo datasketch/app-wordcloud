@@ -35,6 +35,7 @@ download_plot: Descargar gráfico
 info_sw: "Remover palabras (artículos y algunos verbos) que no son esenciales para entender el significado o contexto de una frase"
 info_tn: "Escoger las n palabras más frecuentes en el texto"
 info_el: 'Grado de "planura" de la forma'
+in_url: "Se extraen los párrafos (el contenido de los HTML tags p) de la página web"
 spanish: Español
 english: Inglés
 portuguese: Portugués
