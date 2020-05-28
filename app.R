@@ -21,7 +21,7 @@ ui <- panelsPage(useShi18ny(),
                        width = 300,
                        # body = uiOutput("data_preview", style = "box-shadow: -3px 3px 5px 2px rgba(0, 0, 0, 0.06); padding: 12px 10px;")),
                        body = uiOutput("data_preview")),
-                 panel(title = "Options",
+                 panel(title = ui_("options"),
                        color = "chardonnay",
                        width = 250,
                        body = uiOutput("controls")),
@@ -41,9 +41,7 @@ server <- function(input, output, session) {
   
   i18n <- list(defaultLang = "en", availableLangs = c("es", "en", "pt"))
   lang <- callModule(langSelector, "lang", i18n = i18n, showSelector = TRUE)
-  observeEvent(lang(), {
-    uiLangUpdate(input$shi18ny_ui_classes, lang())
-  })  
+  observeEvent(lang(), {uiLangUpdate(input$shi18ny_ui_classes, lang())})  
   
   output$text_input <- renderUI({
     choices <- c("sampleData", "pasted", "fileUpload", "url")
@@ -51,6 +49,37 @@ server <- function(input, output, session) {
     textDocumentInputUI("initial_data",
                         choices = choices,
                         selected = ifelse(is.null(input$`initial_data-textDocumentInput`), "sampleData", input$`initial_data-textDocumentInput`))
+  })
+  
+  labels <- reactive({
+    list(sampleLabel = i_("sample_lb", lang()), 
+         sampleFiles = list("Smithsonian -- Tigers" = "data/sampleData/nvtm"),
+         
+         pasteLabel = i_("paste", lang()), 
+         pasteValue = "", 
+         pastePlaceholder = i_("paste_pl", lang()), 
+         pasteRows = 5, 
+         
+         uploadLabel = i_("upload_lb", lang()), 
+         uploadButtonLabel = i_("upload_bt_lb", lang()), 
+         uploadPlaceholder = i_("upload_pl", lang()),
+         
+         urlLabel = i_("url_lb", lang()),
+         
+         infoList = list("pasted" = "",
+                         "fileUpload" = "",#"Importar archivos de texto (.doc, .txt, .pdf)",
+                         "sampleData" = "",
+                         "url" = i_("in_url", lang())))
+  })
+  
+  td <- reactiveValues(text_uploaded = NULL)
+  
+  observe({
+    td$text_uploaded <- do.call(callModule, c(textDocumentInput, "initial_data", labels()))
+  })
+  
+  output$data_preview <- renderUI({
+    HTML(paste0("<div style = 'box-shadow: -3px 3px 5px 2px rgba(0, 0, 0, 0.06); padding: 12px 10px;'>", td$text_uploaded(), "</div>"))
   })
   
   path <- "parmesan"
@@ -64,24 +93,7 @@ server <- function(input, output, session) {
                   output = output,
                   env = environment())
   
-  output$modal <- renderUI({
-    dw <- i_("download", lang())
-    downloadImageUI("download_data_button", dw, formats = c("jpeg", "png", "pdf"))
-    # downloadHtmlwidgetUI("download_data_button", paste(dw, "PNG"))
-  })
-  
-  labels <- reactive({
-    list(sampleLabel = i_("sample_lb", lang()), 
-         sampleFiles = list("Smithsonian -- Tigers" = "data/sampleData/nvtm"),
-         pasteLabel = i_("paste", lang()), pasteValue = "", pastePlaceholder = i_("paste_pl", lang()), pasteRows = 5, 
-         uploadLabel = i_("upload_lb", lang()), uploadButtonLabel = i_("upload_bt_lb", lang()), uploadPlaceholder = i_("upload_pl", lang()),
-         urlLabel = i_("url_lb", lang()),
-         infoList = list("pasted" = "",
-                         "fileUpload" = "",#"Importar archivos de texto (.doc, .txt, .pdf)",
-                         "sampleData" = "",
-                         "url" = i_("in_url", lang())))
-  })
-  
+  # traduciendo "a mano" named choices de inputs
   observeEvent(lang(), {
     ch0 <- as.character(parmesan$words$inputs[[3]]$input_params$choices)
     names(ch0) <- i_(ch0, lang())
@@ -94,19 +106,8 @@ server <- function(input, output, session) {
     updateSelectInput(session, "shape", choices = ch2, selected = input$shape)
   })
   
-  td <- reactiveValues(text_uploaded = NULL)
-  
-  observe({
-    td$text_uploaded <- do.call(callModule, c(textDocumentInput,
-                                              "initial_data",
-                                              labels()))
-  })
-  
-  output$data_preview <- renderUI({
-    HTML(paste0("<div style = 'box-shadow: -3px 3px 5px 2px rgba(0, 0, 0, 0.06); padding: 12px 10px;'>", td$text_uploaded(), "</div>"))
-  })
-  
   tb <- reactive({
+    req(td$text_uploaded())
     dt0 <- td$text_uploaded()
     dt0 <- gsub("<br/>", "", dt0)
     
@@ -169,6 +170,12 @@ server <- function(input, output, session) {
     wd()
   })
   
+  output$modal <- renderUI({
+    dw <- i_("download", lang())
+    downloadImageUI("download_data_button", dw, formats = c("jpeg", "png", "pdf"))
+    # downloadHtmlwidgetUI("download_data_button", paste(dw, "PNG"))
+  })
+   
   lapply(c("jpeg", "png", "pdf"), function(z) {
     buttonId <- paste0("download_data_button-DownloadImg", z)
     
