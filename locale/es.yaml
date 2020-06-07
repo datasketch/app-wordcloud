@@ -1,20 +1,26 @@
 upload_data: Subir texto
 dataset: Texto
 options: Opciones
-viz: Vizualización
+viz: Nube de palabras
 sample: Textos de muestra
 sample_lb: Selecciona texto de muestra
+sample_ch_0: "data/sampleData/eskimos_es.txt"
+sample_ch_1: "data/sampleData/tigres_es.txt"
+sample_ch_2: "data/sampleData/ink_es.txt"
+sample_ch_nm_0: Esquimales (wikipedia)
+sample_ch_nm_1: Tigres (wikipedia)
+sample_ch_nm_2: Tinta (wikipedia)
 paste: Copiar & pegar
 paste_pl: Copia y pega aquí
 upload: Subir DOC/TXT/PDF
-upload_lb: Escoje archivo DOC/TXT/PDF
+upload_lb: Escoge archivo DOC/TXT/PDF
 upload_bt_lb: Examinar...
 upload_pl: Ningún archivo seleccionado
 url: URL
 url_lb: Scrapear página web
-styles: Estílos
+styles: Estilos
 words: Palabras
-sizes: Imágen
+sizes: Imagen
 font_family: Fuente texto
 font_weight: Grosor texto
 theme: Tema
@@ -36,6 +42,8 @@ info_sw: "Remover palabras (artículos y algunos verbos) que no son esenciales p
 info_tn: "Escoger las n palabras más frecuentes en el texto"
 info_el: 'Grado de "planura" de la forma'
 in_url: "Se extraen los párrafos (el contenido de los HTML tags p) de la página web"
+normal: Normal
+bold: Negrilla 
 spanish: Español
 english: Inglés
 portuguese: Portugués

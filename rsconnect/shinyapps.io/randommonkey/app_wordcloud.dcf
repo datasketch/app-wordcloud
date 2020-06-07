@@ -5,8 +5,8 @@ account: randommonkey
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2167988
-bundleId: 3185823
+bundleId: 3239620
 url: https://randommonkey.shinyapps.io/app_wordcloud/
-when: 1590369795.4425
+when: 1591564482.32196
 asMultiple: FALSE
 asStatic: FALSE

@@ -1,9 +1,15 @@
 upload_data: Upload text
 dataset: Text
 options: Options
-viz: Viz
+viz: Wordcloud
 sample: Sample texts
 sample_lb: Select a sample text
+sample_ch_0: "data/sampleData/eskimos_en.txt"
+sample_ch_1: "data/sampleData/tigres_en.txt"
+sample_ch_2: "data/sampleData/ink_en.txt"
+sample_ch_nm_0: Eskimos (wikipedia)
+sample_ch_nm_1: Tigers (wikipedia)
+sample_ch_nm_2: Ink (wikipedia)
 paste: Copy & paste
 paste_pl: Copy and paste it here
 upload: DOC/TXT/PDF upload
@@ -32,11 +38,13 @@ min_size: Minimum font size
 rotation_ratio: Probability for rotation
 rotation: Minimum, maximum rotation
 download_plot: Download plot
-info_sw: "Remove words (such as articles and some verbs) that aren't essential for understanding the meaning or context of a sentence"
+info_sw: "Remove words (articles and some verbs) that aren't essential for understanding the meaning or context of a sentence"
 info_tn: "Choosing the n more frequent words in the text"
 info_el: 'Degree of "flatness" of the shape'
 in_url: "Extracting the paragraphs (the HTML p tags content) of the webpage"
-spanish: Espanish
+normal: Normal
+bold: Bold
+spanish: Spanish
 english: English
 portuguese: Portuguese
 white: White

@@ -1,9 +1,15 @@
 upload_data: Subir texto
 dataset: Texto
 options: Opciones
-viz: Vizualização
+viz: Nuvem de palavras
 sample: Textos de amostra
 sample_lb: Seleccionar texto de amostra
+sample_ch_0: "data/sampleData/eskimos_pt.txt"
+sample_ch_1: "data/sampleData/tigres_pt.txt"
+sample_ch_2: "data/sampleData/luz_pt.txt"
+sample_ch_nm_0: Esquimós (wikipedia)
+sample_ch_nm_1: Tigres (wikipedia)
+sample_ch_nm_2: Luz (wikipedia)
 paste: Copiar e colar
 paste_pl: Copie e cole aqui
 upload: Subir DOC/TXT/PDF
@@ -36,6 +42,8 @@ info_sw: "Remova palavras (artigos e alguns verbos) que não são essenciais par
 info_tn: "Escolhendo as n palavras mais frequentes no texto"
 info_el: 'Grau de "planicidade" da forma'
 in_url: "Parágrafos são extraídos (o conteúdo dos HTML tags p) do página da web"
+normal: Normal
+bold: Negrito
 spanish: Espanhol
 english: Inglês
 portuguese: Português

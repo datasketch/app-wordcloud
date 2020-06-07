@@ -18,7 +18,6 @@ font_weight:
       - normal
       Bold:
       - bold
-    inline: true
 color:
   show: true
   input_type: colorPalette
@@ -188,7 +187,7 @@ words_language:
   input_type: selectizeInput
   input_params:
     label: words_language
-    choices:
+    choices: 
 #      Danish:
 #      - danish
 #      Dutch:
