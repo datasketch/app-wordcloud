@@ -13,7 +13,7 @@ library(webshot)
 
 # arreglar tamaño wordcloud (tigres, castores...)
 
-
+webshot::install_phantomjs()
 
 wordcloud2a <- function (data, size = 1, minSize = 0, gridSize = 0, fontFamily = "Segoe UI", 
                          fontWeight = "bold", color = "random-dark", backgroundColor = "white", 
@@ -268,12 +268,15 @@ server <- function(input, output, session) {
         paste0("wordcloud-", gsub(" ", "_", substr(as.POSIXct(Sys.time()), 1, 19)), ".", z)
       },
       content = function(file) {
-        owd <- setwd(tempdir())
+        owd <- getwd()
+        setwd(tempdir())
         on.exit(setwd(owd))
+        # owd <- tempdir()
+        # on.exit(setwd(owd))
         widget <- wd()
         saveWidget(widget, file = "tmp.html", selfcontained = FALSE)
         webshot::webshot("tmp.html", file, cliprect = c(0, 0, 905, 705), delay = 4.5)
-        session$sendCustomMessage('setButtonState', c('done', buttonId))
+        session$sendCustomMessage('setButtonState', c("done", buttonId))
       }
     )
   })
