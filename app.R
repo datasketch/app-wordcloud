@@ -6,10 +6,11 @@ library(V8)
 library(dsmodules)
 library(tidyverse)
 library(wordcloud2)
-library(htmlwidgets)
+# library(htmlwidgets)
 library(tm)
-library(readtext)
+# library(readtext)
 library(webshot)
+library(shinycustomloader)
 
 # arreglar tamaño wordcloud (tigres, castores...)
 
@@ -74,11 +75,15 @@ ui <- panelsPage(useShi18ny(),
                        color = "chardonnay",
                        can_collapse = FALSE,
                        body = div(langSelectorInput("lang", position = "fixed"),
-                                  uiOutput("result"),
-                                  shinypanels::modal(id = "download",
-                                                     title = ui_("download_plot"),
-                                                     uiOutput("modal"))),
-                       footer = shinypanels::modalButton(label = "Download plot", modal_id = "download")))
+                                  uiOutput("download"),
+                                  br(),
+                                  withLoader(uiOutput("result"), type = "image", loader = "loading_gris.gif"))))
+                       # body = div(langSelectorInput("lang", position = "fixed"),
+                       #            uiOutput("result"),
+                       #            shinypanels::modal(id = "download",
+                       #                               title = ui_("download_plot"),
+                       #                               uiOutput("modal"))),
+                       # footer = shinypanels::modalButton(label = "Download plot", modal_id = "download")))
 
 
 
@@ -122,24 +127,6 @@ server <- function(input, output, session) {
                          "url" = i_("in_url", lang())))
   })
   
-  # td <- reactiveValues(t_uploaded = NULL, ls = NULL, tb = NULL)
-  
-  # observe({
-  #   td$text_uploaded <- do.call(callModule, c(textDocumentInput, "initial_data", labels()))
-  # })
-  # td <- reactive({
-  # td0 <- do.call(callModule, c(textDocumentInput, "initial_data",  reactive(td$ls)))
-  # })
-  
-  # tf <- callModule(textDocumentInput, "initial_data",  sampleFiles = list("Smithsonian -- Tigers" = "data/sampleData/nvtm"))
-  # tf <- callModule(textDocumentInput, "initial_data",
-  #                  # sampleLabel = sm,
-  #                  sampleLabel = reactive(sm),
-  #                  sampleFiles = list("Smithsonian -- Tigers" = "data/sampleData/nvtm"))
-  # 
-  # tf <- callModule(textDocumentInput, "initial_data", labels)
-  
-  
   inputData <- eventReactive(list(labels(), input$`initial_data-textDocumentInput`), {
     do.call(callModule, c(textDocumentInput,
                           "initial_data",
@@ -168,14 +155,15 @@ server <- function(input, output, session) {
     ch0 <- as.character(parmesan$words$inputs[[3]]$input_params$choices)
     names(ch0) <- i_(ch0, lang())
     sl0 <- ch0[which(c("en", "pt_BR", "es") %in% lang())]
-    ch1 <- as.character(parmesan$styles$inputs[[5]]$input_params$choices)
-    names(ch1) <- i_(ch1, lang())
+    # ch1 <- as.character(parmesan$styles$inputs[[5]]$input_params$choices)
+    # names(ch1) <- i_(ch1, lang())
     ch2 <- as.character(parmesan$styles$inputs[[2]]$input_params$choices)
     names(ch2) <- i_(ch2, lang())
     ch3 <- as.character(parmesan$sizes$inputs[[1]]$input_params$choices)
     names(ch3) <- i_(ch3, lang())
+    
     updateSelectizeInput(session, "words_language", choices = ch0, selected = sl0)
-    updateSelectizeInput(session, "background_color", choices = ch1, selected = input$background_color)
+    # updateSelectizeInput(session, "background_color", choices = ch1, selected = input$background_color)
     updateRadioButtons(session, "font_weight", choices = ch2, selected = input$font_weight)
     updateSelectInput(session, "shape", choices = ch3, selected = input$shape)
   })
@@ -242,6 +230,12 @@ server <- function(input, output, session) {
     }
   })
   
+  output$download <- renderUI({
+    lb <- i_("download_plot", lang())
+    dw <- i_("download", lang())
+    downloadImageUI("download_data_button", label = lb, text = dw, formats = c("jpeg", "png", "pdf"), display = "dropdown", dropdownWidth = 160)
+  })
+  
   output$result <- renderUI({
     wd <- input$width
     if (input$width > 800) {
@@ -254,10 +248,10 @@ server <- function(input, output, session) {
     wd()
   })
   
-  output$modal <- renderUI({
-    dw <- i_("download", lang())
-    downloadImageUI("download_data_button", dw, formats = c("jpeg", "png", "pdf"))
-  })
+  # output$modal <- renderUI({
+  #   dw <- i_("download", lang())
+  #   downloadImageUI("download_data_button", dw, formats = c("jpeg", "png", "pdf"))
+  # })
   
   lapply(c("jpeg", "png", "pdf"), function(z) {
     buttonId <- paste0("download_data_button-DownloadImg", z)
@@ -275,7 +269,7 @@ server <- function(input, output, session) {
         # on.exit(setwd(owd))
         widget <- wd()
         saveWidget(widget, file = "tmp.html", selfcontained = FALSE)
-        webshot::webshot("tmp.html", file, cliprect = c(0, 0, 905, 705), delay = 4.5)
+        webshot::webshot("tmp.html", file, cliprect = c(0, 0, 905, 705), delay = 3.5)
         session$sendCustomMessage('setButtonState', c("done", buttonId))
       }
     )

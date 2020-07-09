@@ -10,14 +10,14 @@ sample_ch_2: "data/sampleData/ink_es.txt"
 sample_ch_nm_0: Esquimales (wikipedia)
 sample_ch_nm_1: Tigres (wikipedia)
 sample_ch_nm_2: Tinta (wikipedia)
-paste: Copiar & pegar
+paste: Copiar y pegar
 paste_pl: Copia y pega aquí
 upload: Subir DOC/TXT/PDF
 upload_lb: Escoge archivo DOC/TXT/PDF
 upload_bt_lb: Examinar...
 upload_pl: Ningún archivo seleccionado
 url: URL
-url_lb: Scrapear página web
+url_lb: Escrapear página web
 styles: Estilos
 words: Palabras
 sizes: Imagen

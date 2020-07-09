@@ -24,9 +24,9 @@ color:
   input_params:
     label: color
     colors:
-      - green 
-      - red 
-      - blue 
+        - green 
+        - red 
+        - blue 
 theme:
   show: true
   input_type: selectizeInput
@@ -42,19 +42,12 @@ theme:
     selected: datasketch
 background_color:
   show: true
-  input_type: selectizeInput
+  input_type: colorPaletteInput
   input_params:
     label: background_color
-    choices:
-      White:
-      - white 
-      Red:
-      - red 
-      Blue:
-      - blue
-      Gray:
-      - gray 
-    selected: white
+    colors:
+      - "#ffffff" 
+    max_colors: 1
 size:
   show: true
   input_type: sliderInput
