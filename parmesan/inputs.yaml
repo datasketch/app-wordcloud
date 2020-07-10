@@ -165,10 +165,11 @@ top_n:
     text: info_tn
 stop_words:
   show: true
-  input_type: checkboxInput
+  input_type: toggleSwitchInput
   input_params:
     label: stop_words
-    value: true
+    on_label: ""
+    off_label: ""
   input_info:
     icon: info-circle
     text: info_sw  
