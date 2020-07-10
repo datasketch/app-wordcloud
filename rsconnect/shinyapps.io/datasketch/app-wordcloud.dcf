@@ -1,0 +1,12 @@
+name: app-wordcloud
+title: app-wordcloud
+username:
+account: datasketch
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2554994
+bundleId: 3374296
+url: https://datasketch.shinyapps.io/app-wordcloud/
+when: 1594343746.18336
+asMultiple: FALSE
+asStatic: FALSE

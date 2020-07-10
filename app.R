@@ -6,7 +6,7 @@ library(V8)
 library(dsmodules)
 library(tidyverse)
 library(wordcloud2)
-# library(htmlwidgets)
+library(htmlwidgets)
 library(tm)
 # library(readtext)
 library(webshot)
@@ -72,18 +72,11 @@ ui <- panelsPage(useShi18ny(),
                        width = 250,
                        body = uiOutput("controls")),
                  panel(title = ui_("viz"),
+                       title_plugin = uiOutput("download"),
                        color = "chardonnay",
                        can_collapse = FALSE,
                        body = div(langSelectorInput("lang", position = "fixed"),
-                                  uiOutput("download"),
-                                  br(),
                                   withLoader(uiOutput("result"), type = "image", loader = "loading_gris.gif"))))
-                       # body = div(langSelectorInput("lang", position = "fixed"),
-                       #            uiOutput("result"),
-                       #            shinypanels::modal(id = "download",
-                       #                               title = ui_("download_plot"),
-                       #                               uiOutput("modal"))),
-                       # footer = shinypanels::modalButton(label = "Download plot", modal_id = "download")))
 
 
 

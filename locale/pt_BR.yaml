@@ -38,6 +38,7 @@ min_size: Tamanho mínimo do texto
 rotation_ratio: Rotação
 rotation: Rotação mínima
 download_plot: Baixar gráfico
+download: Baixar
 info_sw: "Remova palavras (artigos e alguns verbos) que não são essenciais para entender o significado ou o contexto de uma frase"
 info_tn: "Escolhendo as n palavras mais frequentes no texto"
 info_el: 'Grau de "planicidade" da forma'
