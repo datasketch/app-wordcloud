@@ -170,6 +170,7 @@ stop_words:
     label: stop_words
     on_label: ""
     off_label: ""
+    value: true
   input_info:
     icon: info-circle
     text: info_sw  

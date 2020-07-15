@@ -10,6 +10,7 @@ library(htmlwidgets)
 library(tm)
 # library(readtext)
 library(webshot)
+library(shinyjs)
 library(shinycustomloader)
 
 # arreglar tamaño wordcloud (tigres, castores...)
@@ -60,6 +61,8 @@ wordcloud2a <- function (data, size = 1, minSize = 0, gridSize = 0, fontFamily =
 
 
 ui <- panelsPage(useShi18ny(),
+                 useShinyjs(),
+                 showDebug(),
                  panel(title = ui_("upload_data"),
                        width = 200,
                        body = uiOutput("text_input")),
@@ -238,7 +241,7 @@ server <- function(input, output, session) {
   })
   
   output$wc <- renderWordcloud2({
-    wd()
+     wd()
   })
   
   # output$modal <- renderUI({
