@@ -32,13 +32,14 @@ width: Ancho
 height: Alto
 grid_size: Espaciado
 shape: Forma
-ellipticity: Elipse
+ellipticity: Elipticidad
 size: Tamaño texto
 min_size: Mínimo tamaño de texto
 rotation_ratio: Rotación
 rotation: Rotación mínima
 download_plot: Descargar gráfico
 download: Descargar
+get_link: Obtener enlace
 info_sw: "Remover palabras (artículos y algunos verbos) que no son esenciales para entender el significado o contexto de una frase"
 info_tn: "Escoger las n palabras más frecuentes en el texto"
 info_el: 'Grado de "planura" de la forma'

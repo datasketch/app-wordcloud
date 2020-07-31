@@ -4,11 +4,10 @@ library(shinyinvoer)
 library(shi18ny)
 library(V8)
 library(dsmodules)
-library(tidyverse)
+library(dplyr)
 library(wordcloud2)
 library(htmlwidgets)
 library(tm)
-# library(readtext)
 library(webshot)
 library(shinyjs)
 library(shinycustomloader)
@@ -132,7 +131,7 @@ server <- function(input, output, session) {
   output$data_preview <- renderUI({
     req(inputData())
     t0 <- gsub("<br/>", "", inputData()())
-    HTML(paste0("<div style = 'box-shadow: -3px 3px 5px 2px rgba(0, 0, 0, 0.06); padding: 12px 10px;'>", t0, "</div>"))
+    HTML(paste0("<div style = 'box-shadow: -3px 3px 5px 2px rgba(0, 0, 0, 0.06); padding: 12px 10px; overflow-wrap: anywhere;'>", t0, "</div>"))
   })
   
   path <- "parmesan"
@@ -146,22 +145,19 @@ server <- function(input, output, session) {
                   output = output,
                   env = environment())
   
-  # # traduciendo "a mano" named choices de inputs
+  # traduciendo "a mano" named choices de inputs
   observe({
     ch0 <- as.character(parmesan$words$inputs[[3]]$input_params$choices)
     names(ch0) <- i_(ch0, lang())
     sl0 <- ch0[which(c("en", "pt_BR", "es") %in% lang())]
-    # ch1 <- as.character(parmesan$styles$inputs[[5]]$input_params$choices)
-    # names(ch1) <- i_(ch1, lang())
-    ch2 <- as.character(parmesan$styles$inputs[[2]]$input_params$choices)
+    ch1 <- as.character(parmesan$styles$inputs[[2]]$input_params$choices)
+    names(ch1) <- i_(ch1, lang())
+    ch2 <- as.character(parmesan$sizes$inputs[[1]]$input_params$choices)
     names(ch2) <- i_(ch2, lang())
-    ch3 <- as.character(parmesan$sizes$inputs[[1]]$input_params$choices)
-    names(ch3) <- i_(ch3, lang())
     
     updateSelectizeInput(session, "words_language", choices = ch0, selected = sl0)
-    # updateSelectizeInput(session, "background_color", choices = ch1, selected = input$background_color)
-    updateRadioButtons(session, "font_weight", choices = ch2, selected = input$font_weight)
-    updateSelectInput(session, "shape", choices = ch3, selected = input$shape)
+    updateRadioButtons(session, "font_weight", choices = ch1, selected = input$font_weight)
+    updateSelectInput(session, "shape", choices = ch2, selected = input$shape)
   })
   
   tb <- reactive({
@@ -184,6 +180,7 @@ server <- function(input, output, session) {
         dt0 <- dt2
       }
       dt0 %>%
+        filter(!pl %in% "") %>%
         arrange(desc(Freq))
     }
   })
@@ -197,9 +194,6 @@ server <- function(input, output, session) {
   })
   
   wd <- reactive({
-    session$sendCustomMessage("setButtonState", c("none", "download_data_button-DownloadImgjpeg"))
-    session$sendCustomMessage("setButtonState", c("none", "download_data_button-DownloadImgpng"))
-    session$sendCustomMessage("setButtonState", c("none", "download_data_button-DownloadImgpdf"))
     req(tb(), input$top_n)
     thm <- input$theme
     if (input$theme == "datasketch") {
@@ -208,53 +202,54 @@ server <- function(input, output, session) {
                  ceiling(input$top_n / 9))
     }
     if (!is.null(tb())) {
-      wordcloud2a(data = tb()[1:input$top_n, ],
-                  size = input$size,
-                  # minSize = input$min_size,
-                  gridSize = input$grid_size,
-                  fontFamily = input$font_family,
-                  fontWeight = input$font_weight,
-                  color = thm,
-                  backgroundColor = input$background_color,
-                  minRotation = pi * input$rotation[1],
-                  maxRotation = pi * input$rotation[2],
-                  rotateRatio = input$rotation_ratio,
-                  shape = input$shape,
-                  ellipticity = input$ellipticity,
-                  widgetsize = c(input$width, input$height)
-      )
+      safe_wordcloud <- purrr::safely(wordcloud2a)
+      safe_wordcloud(data = tb()[1:input$top_n, ],
+                     size = input$size,
+                     # minSize = input$min_size,
+                     gridSize = input$grid_size,
+                     fontFamily = input$font_family,
+                     fontWeight = input$font_weight,
+                     color = thm,
+                     backgroundColor = input$background_color,
+                     minRotation = pi * input$rotation[1],
+                     maxRotation = pi * input$rotation[2],
+                     rotateRatio = input$rotation_ratio,
+                     shape = input$shape,
+                     ellipticity = input$ellipticity,
+                     widgetsize = c(input$width, input$height))
     }
   })
   
   output$download <- renderUI({
     lb <- i_("download_plot", lang())
     dw <- i_("download", lang())
-    downloadImageUI("download_data_button", label = lb, text = dw, formats = c("jpeg", "png", "pdf"), display = "dropdown", dropdownWidth = 160)
+    gl <- i_("get_link", lang())
+    downloadImageUI("download_data_button", dropdownLabel = lb, text = dw, formats = c("link", "jpeg", "png", "pdf"), 
+                    display = "dropdown", dropdownWidth = 160, getLinkLabel = gl, modalTitle = gl)
   })
   
   output$result <- renderUI({
-    wd <- input$width
-    if (input$width > 800) {
-      wd <- "auto"
+    res <- wd()
+    if (is.null(res$result)) {
+      infomessage(p(res$error$message))
+    } else {
+      wd <- input$width
+      if (input$width > 800) {
+        wd <- "auto"
+      }
+      wordcloud2Output("wc", width = wd, height = input$height)
     }
-    wordcloud2Output("wc", width = wd, height = input$height)
   })
   
   output$wc <- renderWordcloud2({
-     wd()
+    wd()$result
   })
-  
-  # output$modal <- renderUI({
-  #   dw <- i_("download", lang())
-  #   downloadImageUI("download_data_button", dw, formats = c("jpeg", "png", "pdf"))
-  # })
   
   lapply(c("jpeg", "png", "pdf"), function(z) {
     buttonId <- paste0("download_data_button-DownloadImg", z)
     
     output[[paste0("download_data_button-DownloadImg", z)]] <- downloadHandler(
       filename = function() {
-        session$sendCustomMessage("setButtonState", c("loading", buttonId))
         paste0("wordcloud-", gsub(" ", "_", substr(as.POSIXct(Sys.time()), 1, 19)), ".", z)
       },
       content = function(file) {
@@ -263,12 +258,10 @@ server <- function(input, output, session) {
         on.exit(setwd(owd))
         # owd <- tempdir()
         # on.exit(setwd(owd))
-        widget <- wd()
+        widget <- wd()$result
         saveWidget(widget, file = "tmp.html", selfcontained = FALSE)
         webshot::webshot("tmp.html", file, cliprect = c(0, 0, 905, 705), delay = 3.5)
-        session$sendCustomMessage('setButtonState', c("done", buttonId))
-      }
-    )
+      })
   })
   
 }

@@ -54,7 +54,7 @@ size:
   input_params:
     label: size
     min: 0
-    max: 3
+    max: 15
     value: 1
     step: 0.1
 min_size:
@@ -124,7 +124,7 @@ ellipticity:
   show: true
   input_type: sliderInput
   input_params:
-    label: Ellipticity
+    label: ellipticity
     min: 0
     max: 1
     value: 0.65
