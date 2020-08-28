@@ -40,6 +40,16 @@ rotation: Rotación mínima
 download_plot: Descargar gráfico
 download: Descargar
 get_link: Obtener enlace
+gl_name: Nombre
+gl_slug: Slug
+gl_description: Descripción
+gl_license: Licencia
+gl_tags: Etiquetas
+gl_category: Categorías
+gl_save: Guardar en dslibrary
+gl_url: URL
+gl_iframe: Copiar para embeber
+gl_error: Ha habido un problema; inténtelo de nuevo en unos momentos.
 info_sw: "Remover palabras (artículos y algunos verbos) que no son esenciales para entender el significado o contexto de una frase"
 info_tn: "Escoger las n palabras más frecuentes en el texto"
 info_el: 'Grado de "planura" de la forma'

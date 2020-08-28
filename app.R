@@ -4,6 +4,7 @@ library(shinyinvoer)
 library(shi18ny)
 library(V8)
 library(dsmodules)
+library(dspins)
 library(dplyr)
 library(wordcloud2)
 library(htmlwidgets)
@@ -98,7 +99,6 @@ server <- function(input, output, session) {
   
   labels <- reactive({
     sm_f <- i_(c("sample_ch_0", "sample_ch_1", "sample_ch_2"), lang())
-    # sm_s <- sm_f[sample(1:length(sm_f), 1)]
     names(sm_f) <- i_(c("sample_ch_nm_0", "sample_ch_nm_1", "sample_ch_nm_2"), lang())
     
     list(sampleLabel = i_("sample_lb", lang()), 
@@ -123,9 +123,7 @@ server <- function(input, output, session) {
   })
   
   inputData <- eventReactive(list(labels(), input$`initial_data-textDocumentInput`), {
-    do.call(callModule, c(textDocumentInput,
-                          "initial_data",
-                          labels()))
+    do.call(callModule, c(textDocumentInput, "initial_data", labels()))
   })
   
   output$data_preview <- renderUI({
@@ -224,8 +222,15 @@ server <- function(input, output, session) {
     lb <- i_("download_plot", lang())
     dw <- i_("download", lang())
     gl <- i_("get_link", lang())
-    downloadImageUI("download_data_button", dropdownLabel = lb, text = dw, formats = c("link", "jpeg", "png", "pdf"), 
-                    display = "dropdown", dropdownWidth = 160, getLinkLabel = gl, modalTitle = gl)
+    mb <- list(textInput("name", i_("gl_name", lang())),
+               textInput("description", i_("gl_description", lang())),
+               selectInput("license", i_("gl_license", lang()), choices = c("CC0", "CC-BY")),
+               selectizeInput("tags", i_("gl_tags", lang()), choices = list("No tag" = "no-tag"), multiple = TRUE, options = list(plugins= list('remove_button', 'drag_drop'))),
+               selectizeInput("category", i_("gl_category", lang()), choices = list("No category" = "no-category")))
+    downloadDsUI("download_data_button", dropdownLabel = lb, text = dw, formats = c("jpeg", "png", "pdf"),
+                 display = "dropdown", dropdownWidth = 170, getLinkLabel = gl, modalTitle = gl, modalBody = mb,
+                 modalButtonLabel = i_("gl_save", lang()), modalLinkLabel = i_("gl_url", lang()), modalIframeLabel = i_("gl_iframe", lang()),
+                 modalFormatChoices = c("HTML" = "html", "PNG" = "png"))
   })
   
   output$result <- renderUI({
@@ -246,9 +251,9 @@ server <- function(input, output, session) {
   })
   
   lapply(c("jpeg", "png", "pdf"), function(z) {
-    buttonId <- paste0("download_data_button-DownloadImg", z)
+    buttonId <- paste0("download_data_button-download_data_button-DownloadImg", z)
     
-    output[[paste0("download_data_button-DownloadImg", z)]] <- downloadHandler(
+    output[[paste0("download_data_button-download_data_button-DownloadImg", z)]] <- downloadHandler(
       filename = function() {
         paste0("wordcloud-", gsub(" ", "_", substr(as.POSIXct(Sys.time()), 1, 19)), ".", z)
       },
@@ -263,6 +268,42 @@ server <- function(input, output, session) {
         webshot::webshot("tmp.html", file, cliprect = c(0, 0, 905, 705), delay = 3.5)
       })
   })
+  
+  # url params
+  par <- list(user_name = "brandon", org_name = NULL)
+  url_par <- reactive({
+    url_params(par, session)
+  })
+  
+  # prepare element for pining (for htmlwidgets or ggplots)
+  # función con user board connect y set locale
+  pin_ <- function(x, bkt, ...) {
+    x <- dsmodules:::eval_reactives(x)
+    bkt <- dsmodules:::eval_reactives(bkt)
+    nm <- input$`download_data_button-modal_form-name`
+    if (!nzchar(input$`download_data_button-modal_form-name`)) {
+      nm <- paste0("saved", "_", gsub("[ _:]", "-", substr(as.POSIXct(Sys.time()), 1, 19)))
+      updateTextInput(session, "download_data_button-modal_form-name", value = nm)
+    }
+    dv <- dsviz(x,
+                name = nm,
+                description = input$`download_data_button-modal_form-description`,
+                license = input$`download_data_button-modal_form-license`,
+                tags = input$`download_data_button-modal_form-tags`,
+                category = input$`download_data_button-modal_form-category`)
+    dspins_user_board_connect(bkt)
+    Sys.setlocale(locale = "en_US.UTF-8")
+    pin(dv, bucket_id = bkt)
+  }
+  
+  # descargas
+  observe({
+    downloadDsServer("download_data_button", element = reactive(wd()$result), formats = "",
+                     errorMessage = NULL,#i_("gl_error", lang()),
+                     modalFunction = pin_, reactive(wd()$result),
+                     bkt = url_par()$inputs$user_name)
+  })
+  
   
 }
 

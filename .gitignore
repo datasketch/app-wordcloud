@@ -1,4 +1,18 @@
-.Rproj.user
+# History files
 .Rhistory
+.Rapp.history
+
+# RStudio project files
+.Rproj.user/
+.Rproj.user/*
+
+# RData
 .RData
-.Ruserdata
+
+# Deployment files
+rsconnect/
+
+
+.DS_Store 
+.env
+
