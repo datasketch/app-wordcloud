@@ -134,7 +134,7 @@ ellipticity:
     text: info_el
 width:
   show: true
-  input_type: numericInput
+  input_type: numberInput
   input_params:
     label: width
     min: 0
@@ -143,7 +143,7 @@ width:
     step: 1
 height:
   show: true
-  input_type: numericInput
+  input_type: numberInput
   input_params:
     label: height
     min: 1
@@ -152,7 +152,7 @@ height:
     step: 1
 top_n:
   show: true
-  input_type: numericInput
+  input_type: numberInput
   input_params:
     label: top_n
     min: 1
