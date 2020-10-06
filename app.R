@@ -172,7 +172,6 @@ server <- function(input, output, session) {
         dt0 <- strsplit(dt0, " ")[[1]]
         dt0 <- table(dt0)
         dt0 <- as.data.frame(dt0)
-        assign("a0", dt0, envir = globalenv())
       }
       if (input$stop_words) {
         dt1 <- setdiff(dt0$dt0, tm::stopwords(input$words_language))
